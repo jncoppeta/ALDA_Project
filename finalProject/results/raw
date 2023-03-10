@@ -1,0 +1,1255 @@
+./nba_ml_model.py
+
+===ORIGINAL REGULAR SEASON DATA===:
+
+
+           ilkid  year firstname   lastname team leag  gp  minutes  pts  oreb  dreb  reb  asts  stl  blk  turnover   pf  fga  fgm  fta  ftm  tpa  tpm
+0      ABRAMJO01  1946      John  Abramovic  PIT    N  47        0  527     0     0    0    35    0    0       0.0  161  834  202  178  123    0    0
+1      AUBUCCH01  1946      Chet   Aubuchon  DE1    N  30        0   65     0     0    0    20    0    0       0.0   46   91   23   35   19    0    0
+2      BAKERNO01  1946      Norm      Baker  CH1    N   4        0    0     0     0    0     0    0    0       0.0    0    1    0    0    0    0    0
+3      BALTIHE01  1946  Herschel  Baltimore  ST1    N  58        0  138     0     0    0    16    0    0       0.0   98  263   53   69   32    0    0
+4       BARRJO01  1946      John       Barr  ST1    N  58        0  295     0     0    0    54    0    0       0.0  164  438  124   79   47    0    0
+...          ...   ...       ...        ...  ...  ...  ..      ...  ...   ...   ...  ...   ...  ...  ...       ...  ...  ...  ...  ...  ...  ...  ...
+19107  WILLISC01  2004     Scott   Williams  CLE    N  19      152   33    15    15   30     8    4    6       5.0   30   41   12   11    9    1    0
+19108  WOODSLO01  2004     Loren      Woods  TOR    N  45      712  176    81   139  220    17    8   39      37.0   78  164   71   59   34    1    0
+19109  WOODSQY01  2004    Qyntel      Woods  MIA    N   3       40   10     2     4    6     0    4    0       2.0    6   12    5    0    0    0    0
+19110  WRIGHDO01  2004    Dorell     Wright  MIA    N   3       27    7     0     1    1     3    4    0       3.0    2   11    3    1    1    4    0
+19111  WRIGHLO02  2004  Lorenzen     Wright  MEM    N  80     2287  771   177   436  613    87   58   69     100.0  251  683  320  198  131    3    0
+
+[19112 rows x 23 columns]
+
+===DIMENSIONALITY REDUCTION ON REGULAR SEASON DATA and REMOVE DATA BEFORE 73===:
+
+
+           ilkid  year  gp  minutes   pts  oreb  dreb   reb  asts  stl  blk  turnover   pf  field_goal_percentage  field_throw_percentage  three_point_percentage              id
+5039   ABDULKA01  1973  81     3548  2191   287   891  1178   386  112  283       0.0  238              53.894258               70.238095                0.000000  ABDULKA01-1973
+5040   ADAMSDO01  1973  74     2298   759   133   315   448   141  110   12       0.0  242              40.835580               76.119403                0.000000  ADAMSDO01-1973
+5041   ADAMSGE01  1973  80     1433   585     0   341   341   127   44   23     119.0  111              50.000000               75.728155               14.285714  ADAMSGE01-1973
+5042   ADELMRI01  1973  55      618   182    16    53    69    56   36    1       0.0   63              37.647059               71.052632                0.000000  ADELMRI01-1973
+5043   ALLENLU01  1973  72     2388  1268    89   202   291   374  137   22       0.0  215              49.529190               78.832117                0.000000  ALLENLU01-1973
+...          ...   ...  ..      ...   ...   ...   ...   ...   ...  ...  ...       ...  ...                    ...                     ...                     ...             ...
+19107  WILLISC01  2004  19      152    33    15    15    30     8    4    6       5.0   30              29.268293               81.818182                0.000000  WILLISC01-2004
+19108  WOODSLO01  2004  45      712   176    81   139   220    17    8   39      37.0   78              43.292683               57.627119                0.000000  WOODSLO01-2004
+19109  WOODSQY01  2004   3       40    10     2     4     6     0    4    0       2.0    6              41.666667                0.000000                0.000000  WOODSQY01-2004
+19110  WRIGHDO01  2004   3       27     7     0     1     1     3    4    0       3.0    2              27.272727              100.000000                0.000000  WRIGHDO01-2004
+19111  WRIGHLO02  2004  80     2287   771   177   436   613    87   58   69     100.0  251              46.852123               66.161616                0.000000  WRIGHLO02-2004
+
+[14073 rows x 17 columns]
+
+===ALLSTAR SEASON DATA===:
+
+
+           ilkid  year firstname      lastname conference leag  gp  minutes   pts  dreb  oreb   reb  asts  stl  blk  turnover  pf   fga  fgm  fta  ftm  tpa  tpm
+0     AbdulKa01   1978     Karem  Abdul-Jabbar       west    N   1       28  11.0   NaN   NaN   8.0   3.0  NaN  NaN       NaN NaN  12.0  5.0  2.0  1.0  NaN  NaN
+1     AbdulKa01   1969     Karem  Abdul-Jabbar       east    N   1       18  10.0   NaN   NaN  11.0   4.0  NaN  NaN       NaN NaN   8.0  4.0  2.0  2.0  NaN  NaN
+2     AbdulKa01   1988    Kareem  Abdul-Jabbar       west    N   1       13   4.0   NaN   NaN   3.0   0.0  NaN  NaN       NaN NaN   6.0  1.0  2.0  2.0  NaN  NaN
+3     AbdulKa01   1987    Kareem  Abdul-Jabbar       west    N   1       14  10.0   NaN   NaN   4.0   0.0  NaN  NaN       NaN NaN   9.0  4.0  2.0  2.0  NaN  NaN
+4     AbdulKa01   1986    Kareem  Abdul-Jabbar       west    N   1       27  10.0   NaN   NaN   8.0   3.0  NaN  NaN       NaN NaN   9.0  4.0  2.0  2.0  NaN  NaN
+...          ...   ...       ...           ...        ...  ...  ..      ...   ...   ...   ...   ...   ...  ...  ...       ...  ..   ...  ...  ...  ...  ...  ...
+1457  YardlGe01   1956    George       Yardley       west    N   1       25   9.0   NaN   NaN   9.0   0.0  NaN  NaN       NaN NaN  10.0  4.0  1.0  1.0  NaN  NaN
+1458  YardlGe01   1955    George       Yardley       west    N   1       19   8.0   NaN   NaN   6.0   1.0  NaN  NaN       NaN NaN   7.0  3.0  3.0  2.0  NaN  NaN
+1459  YardlGe01   1954    George       Yardley       west    N   1       22  11.0   NaN   NaN   4.0   2.0  NaN  NaN       NaN NaN  11.0  4.0  4.0  3.0  NaN  NaN
+1460  YardlGe01   1959    George       Yardley       east    N   1       16  11.0   NaN   NaN   3.0   0.0  NaN  NaN       NaN NaN   9.0  5.0  2.0  1.0  NaN  NaN
+1461  ZasloMa01   1951       Max     Zaslofsky       east    N   1       25   1.0   NaN   NaN   4.0   2.0  NaN  NaN       NaN NaN   7.0  3.0  5.0  5.0  NaN  NaN
+
+[1462 rows x 23 columns]
+
+===DIMENSIONALITY REDUCTION ON ALLSTAR DATA===:
+
+
+          ilkid  year               y
+0     ABDULKA01  1978  ABDULKA01-1978
+1     ABDULKA01  1969  ABDULKA01-1969
+2     ABDULKA01  1988  ABDULKA01-1988
+3     ABDULKA01  1987  ABDULKA01-1987
+4     ABDULKA01  1986  ABDULKA01-1986
+...         ...   ...             ...
+1457  YARDLGE01  1956  YARDLGE01-1956
+1458  YARDLGE01  1955  YARDLGE01-1955
+1459  YARDLGE01  1954  YARDLGE01-1954
+1460  YARDLGE01  1959  YARDLGE01-1959
+1461  ZASLOMA01  1951  ZASLOMA01-1951
+
+[1462 rows x 3 columns]
+Total players considered for training/testing: 14073
+Total players considered training/testing *cleaned*: 7611
+
+
+===data used for models===
+
+       year  gp  minutes   pts  oreb  dreb   reb  asts  stl  blk  turnover   pf  field_goal_percentage  field_throw_percentage  three_point_percentage  isAllStar
+5039   1973  81     3548  2191   287   891  1178   386  112  283       0.0  238              53.894258               70.238095                0.000000          1
+5040   1973  74     2298   759   133   315   448   141  110   12       0.0  242              40.835580               76.119403                0.000000          0
+5041   1973  80     1433   585     0   341   341   127   44   23     119.0  111              50.000000               75.728155               14.285714          0
+5042   1973  55      618   182    16    53    69    56   36    1       0.0   63              37.647059               71.052632                0.000000          0
+5043   1973  72     2388  1268    89   202   291   374  137   22       0.0  215              49.529190               78.832117                0.000000          0
+...     ...  ..      ...   ...   ...   ...   ...   ...  ...  ...       ...  ...                    ...                     ...                     ...        ...
+19107  2004  19      152    33    15    15    30     8    4    6       5.0   30              29.268293               81.818182                0.000000          0
+19108  2004  45      712   176    81   139   220    17    8   39      37.0   78              43.292683               57.627119                0.000000          0
+19109  2004   3       40    10     2     4     6     0    4    0       2.0    6              41.666667                0.000000                0.000000          0
+19110  2004   3       27     7     0     1     1     3    4    0       3.0    2              27.272727              100.000000                0.000000          0
+19111  2004  80     2287   771   177   436   613    87   58   69     100.0  251              46.852123               66.161616                0.000000          0
+
+[14073 rows x 16 columns]
+Data with at least 55 games played:
+
+       year  gp  minutes   pts  oreb  dreb   reb  asts  stl  blk  turnover   pf  field_goal_percentage  field_throw_percentage  three_point_percentage  isAllStar
+5039   1973  81     3548  2191   287   891  1178   386  112  283       0.0  238              53.894258               70.238095                0.000000          1
+5040   1973  74     2298   759   133   315   448   141  110   12       0.0  242              40.835580               76.119403                0.000000          0
+5041   1973  80     1433   585     0   341   341   127   44   23     119.0  111              50.000000               75.728155               14.285714          0
+5042   1973  55      618   182    16    53    69    56   36    1       0.0   63              37.647059               71.052632                0.000000          0
+5043   1973  72     2388  1268    89   202   291   374  137   22       0.0  215              49.529190               78.832117                0.000000          0
+...     ...  ..      ...   ...   ...   ...   ...   ...  ...  ...       ...  ...                    ...                     ...                     ...        ...
+19101  2004  55     1322   424    44   128   172    92   38    4      60.0  147              43.030303               69.565217               38.356164          0
+19103  2004  71     1952   719    19   103   122   399   75    5     130.0   91              41.304348               79.207921               32.424242          0
+19104  2004  79     1211   359   115   168   283    41   55   10      65.0  155              50.205761               66.860465                0.000000          0
+19106  2004  80     2254   814    50   194   244   484   74   11     196.0  221              43.826323               85.000000               32.323232          0
+19111  2004  80     2287   771   177   436   613    87   58   69     100.0  251              46.852123               66.161616                0.000000          0
+
+[7611 rows x 16 columns]
+
+
+===LEAVE ONE OUT CROSS-VALIDATION===
+
+current season as TEST set: 1973
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.8940217391304348
+==Precision Score: 0.5454545454545454
+==Recall Score: 0.6818181818181818
+==F-score: 0.6060606060606061
+==Best parameters: {'criterion': 'entropy'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9036144578313253
+==Precision Score: 0.725
+==Recall Score: 0.6904761904761905
+==F-score: 0.7073170731707318
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9375
+==Precision Score: 0.9565217391304348
+==Recall Score: 0.5
+==F-score: 0.6567164179104478
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 10, 'p': 1}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9036144578313253
+==Precision Score: 0.8214285714285714
+==Recall Score: 0.5476190476190477
+==F-score: 0.6571428571428571
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 3}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9239130434782609
+==Precision Score: 0.7666666666666667
+==Recall Score: 0.5227272727272727
+==F-score: 0.6216216216216216
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.8875502008032129
+==Precision Score: 0.7333333333333333
+==Recall Score: 0.5238095238095238
+==F-score: 0.611111111111111
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1974
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.91
+==Precision Score: 0.6222222222222222
+==Recall Score: 0.5957446808510638
+==F-score: 0.608695652173913
+==Best parameters: {'criterion': 'gini'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9204545454545454
+==Precision Score: 0.7894736842105263
+==Recall Score: 0.6976744186046512
+==F-score: 0.7407407407407408
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9325
+==Precision Score: 0.8846153846153846
+==Recall Score: 0.48936170212765956
+==F-score: 0.6301369863013698
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 1}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9015151515151515
+==Precision Score: 0.8695652173913043
+==Recall Score: 0.46511627906976744
+==F-score: 0.6060606060606061
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 8, 'p': 1}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9325
+==Precision Score: 0.8571428571428571
+==Recall Score: 0.5106382978723404
+==F-score: 0.64
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9090909090909091
+==Precision Score: 0.8275862068965517
+==Recall Score: 0.5581395348837209
+==F-score: 0.6666666666666666
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1975
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.8932291666666666
+==Precision Score: 0.5833333333333334
+==Recall Score: 0.44680851063829785
+==F-score: 0.5060240963855422
+==Best parameters: {'criterion': 'entropy'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.8636363636363636
+==Precision Score: 0.6774193548387096
+==Recall Score: 0.4772727272727273
+==F-score: 0.5599999999999999
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9322916666666666
+==Precision Score: 0.92
+==Recall Score: 0.48936170212765956
+==F-score: 0.6388888888888888
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 8, 'p': 1}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9049586776859504
+==Precision Score: 0.92
+==Recall Score: 0.5227272727272727
+==F-score: 0.6666666666666666
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 8, 'p': 1}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9166666666666666
+==Precision Score: 0.7419354838709677
+==Recall Score: 0.48936170212765956
+==F-score: 0.5897435897435898
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.8884297520661157
+==Precision Score: 0.8148148148148148
+==Recall Score: 0.5
+==F-score: 0.6197183098591549
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1976
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.9411764705882353
+==Precision Score: 0.64
+==Recall Score: 0.5714285714285714
+==F-score: 0.6037735849056605
+==Best parameters: {'criterion': 'gini'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9065420560747663
+==Precision Score: 0.6470588235294118
+==Recall Score: 0.44
+==F-score: 0.5238095238095238
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.957983193277311
+==Precision Score: 0.8823529411764706
+==Recall Score: 0.5357142857142857
+==F-score: 0.6666666666666667
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 2}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9439252336448598
+==Precision Score: 0.8823529411764706
+==Recall Score: 0.6
+==F-score: 0.7142857142857143
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 2}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9635854341736695
+==Precision Score: 0.8
+==Recall Score: 0.7142857142857143
+==F-score: 0.7547169811320756
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9485981308411215
+==Precision Score: 0.7916666666666666
+==Recall Score: 0.76
+==F-score: 0.7755102040816326
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1977
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.946524064171123
+==Precision Score: 0.5555555555555556
+==Recall Score: 0.6521739130434783
+==F-score: 0.6
+==Best parameters: {'criterion': 'entropy'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9124423963133641
+==Precision Score: 0.5652173913043478
+==Recall Score: 0.5909090909090909
+==F-score: 0.5777777777777778
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9625668449197861
+==Precision Score: 0.8
+==Recall Score: 0.5217391304347826
+==F-score: 0.6315789473684211
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 10, 'p': 2}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9400921658986175
+==Precision Score: 0.8
+==Recall Score: 0.5454545454545454
+==F-score: 0.6486486486486486
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 10, 'p': 2}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9705882352941176
+==Precision Score: 0.8333333333333334
+==Recall Score: 0.6521739130434783
+==F-score: 0.7317073170731708
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9539170506912442
+==Precision Score: 0.8333333333333334
+==Recall Score: 0.6818181818181818
+==F-score: 0.7499999999999999
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1978
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.9505813953488372
+==Precision Score: 0.5833333333333334
+==Recall Score: 0.6666666666666666
+==F-score: 0.6222222222222222
+==Best parameters: {'criterion': 'entropy'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9170506912442397
+==Precision Score: 0.5
+==Recall Score: 0.6111111111111112
+==F-score: 0.55
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9505813953488372
+==Precision Score: 0.625
+==Recall Score: 0.47619047619047616
+==F-score: 0.5405405405405405
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 2}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9354838709677419
+==Precision Score: 0.625
+==Recall Score: 0.5555555555555556
+==F-score: 0.5882352941176471
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 2}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9476744186046512
+==Precision Score: 0.6
+==Recall Score: 0.42857142857142855
+==F-score: 0.5
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9308755760368663
+==Precision Score: 0.5882352941176471
+==Recall Score: 0.5555555555555556
+==F-score: 0.5714285714285715
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1979
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.938375350140056
+==Precision Score: 0.45
+==Recall Score: 0.45
+==F-score: 0.45
+==Best parameters: {'criterion': 'entropy'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9112149532710281
+==Precision Score: 0.5263157894736842
+==Recall Score: 0.5
+==F-score: 0.5128205128205129
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9635854341736695
+==Precision Score: 0.7333333333333333
+==Recall Score: 0.55
+==F-score: 0.6285714285714286
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 2}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9485981308411215
+==Precision Score: 0.9090909090909091
+==Recall Score: 0.5
+==F-score: 0.6451612903225806
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 10, 'p': 1}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9635854341736695
+==Precision Score: 0.7692307692307693
+==Recall Score: 0.5
+==F-score: 0.6060606060606061
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9439252336448598
+==Precision Score: 0.7857142857142857
+==Recall Score: 0.55
+==F-score: 0.6470588235294117
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1980
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.9421487603305785
+==Precision Score: 0.5294117647058824
+==Recall Score: 0.4090909090909091
+==F-score: 0.46153846153846156
+==Best parameters: {'criterion': 'entropy'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.8986175115207373
+==Precision Score: 0.47619047619047616
+==Recall Score: 0.47619047619047616
+==F-score: 0.47619047619047616
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9614325068870524
+==Precision Score: 0.7857142857142857
+==Recall Score: 0.5
+==F-score: 0.6111111111111112
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 2}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9447004608294931
+==Precision Score: 0.8
+==Recall Score: 0.5714285714285714
+==F-score: 0.6666666666666666
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 3}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.953168044077135
+==Precision Score: 0.7777777777777778
+==Recall Score: 0.3181818181818182
+==F-score: 0.45161290322580644
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9354838709677419
+==Precision Score: 0.8888888888888888
+==Recall Score: 0.38095238095238093
+==F-score: 0.5333333333333333
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1981
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.9276139410187667
+==Precision Score: 0.42857142857142855
+==Recall Score: 0.375
+==F-score: 0.39999999999999997
+==Best parameters: {'criterion': 'gini'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.8893805309734514
+==Precision Score: 0.375
+==Recall Score: 0.2857142857142857
+==F-score: 0.3243243243243243
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9436997319034852
+==Precision Score: 0.6
+==Recall Score: 0.375
+==F-score: 0.4615384615384615
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 6, 'p': 3}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.911504424778761
+==Precision Score: 0.5294117647058824
+==Recall Score: 0.42857142857142855
+==F-score: 0.4736842105263158
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 7, 'p': 3}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9463806970509383
+==Precision Score: 0.6428571428571429
+==Recall Score: 0.375
+==F-score: 0.4736842105263159
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9247787610619469
+==Precision Score: 0.6428571428571429
+==Recall Score: 0.42857142857142855
+==F-score: 0.5142857142857143
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1982
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.9437340153452686
+==Precision Score: 0.5185185185185185
+==Recall Score: 0.6086956521739131
+==F-score: 0.5599999999999999
+==Best parameters: {'criterion': 'gini'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9017857142857143
+==Precision Score: 0.5217391304347826
+==Recall Score: 0.5217391304347826
+==F-score: 0.5217391304347826
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9514066496163683
+==Precision Score: 0.6
+==Recall Score: 0.5217391304347826
+==F-score: 0.5581395348837209
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 2}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9196428571428571
+==Precision Score: 0.6190476190476191
+==Recall Score: 0.5652173913043478
+==F-score: 0.5909090909090909
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 7, 'p': 3}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9667519181585678
+==Precision Score: 0.8125
+==Recall Score: 0.5652173913043478
+==F-score: 0.6666666666666667
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9419642857142857
+==Precision Score: 0.7777777777777778
+==Recall Score: 0.6086956521739131
+==F-score: 0.6829268292682927
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1983
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.9416909620991254
+==Precision Score: 0.55
+==Recall Score: 0.5
+==F-score: 0.5238095238095238
+==Best parameters: {'criterion': 'gini'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9313304721030042
+==Precision Score: 0.6363636363636364
+==Recall Score: 0.6363636363636364
+==F-score: 0.6363636363636364
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.967930029154519
+==Precision Score: 0.8235294117647058
+==Recall Score: 0.6363636363636364
+==F-score: 0.717948717948718
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 2}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.944206008583691
+==Precision Score: 0.7647058823529411
+==Recall Score: 0.5909090909090909
+==F-score: 0.6666666666666667
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 3}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9620991253644315
+==Precision Score: 0.8
+==Recall Score: 0.5454545454545454
+==F-score: 0.6486486486486486
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9356223175965666
+==Precision Score: 0.7058823529411765
+==Recall Score: 0.5454545454545454
+==F-score: 0.6153846153846153
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1984
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.9337016574585635
+==Precision Score: 0.5
+==Recall Score: 0.625
+==F-score: 0.5555555555555556
+==Best parameters: {'criterion': 'gini'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.8777292576419214
+==Precision Score: 0.43333333333333335
+==Recall Score: 0.5416666666666666
+==F-score: 0.4814814814814815
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9475138121546961
+==Precision Score: 0.6470588235294118
+==Recall Score: 0.4583333333333333
+==F-score: 0.5365853658536585
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 10, 'p': 2}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9039301310043668
+==Precision Score: 0.5555555555555556
+==Recall Score: 0.4166666666666667
+==F-score: 0.4761904761904762
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 1}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9613259668508287
+==Precision Score: 0.8125
+==Recall Score: 0.5416666666666666
+==F-score: 0.65
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9388646288209607
+==Precision Score: 0.7777777777777778
+==Recall Score: 0.5833333333333334
+==F-score: 0.6666666666666666
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1985
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.9340369393139841
+==Precision Score: 0.5
+==Recall Score: 0.56
+==F-score: 0.5283018867924528
+==Best parameters: {'criterion': 'gini'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.911504424778761
+==Precision Score: 0.5555555555555556
+==Recall Score: 0.6521739130434783
+==F-score: 0.6
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9472295514511874
+==Precision Score: 0.6666666666666666
+==Recall Score: 0.4
+==F-score: 0.5
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 2}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9203539823008849
+==Precision Score: 0.6666666666666666
+==Recall Score: 0.43478260869565216
+==F-score: 0.5263157894736841
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 2}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9525065963060686
+==Precision Score: 0.7692307692307693
+==Recall Score: 0.4
+==F-score: 0.5263157894736842
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9336283185840708
+==Precision Score: 0.7857142857142857
+==Recall Score: 0.4782608695652174
+==F-score: 0.5945945945945946
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1986
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.9338624338624338
+==Precision Score: 0.4583333333333333
+==Recall Score: 0.4782608695652174
+==F-score: 0.4680851063829787
+==Best parameters: {'criterion': 'gini'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9074889867841409
+==Precision Score: 0.5161290322580645
+==Recall Score: 0.7272727272727273
+==F-score: 0.6037735849056604
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9444444444444444
+==Precision Score: 0.5555555555555556
+==Recall Score: 0.43478260869565216
+==F-score: 0.4878048780487805
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 2}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9118942731277533
+==Precision Score: 0.5555555555555556
+==Recall Score: 0.45454545454545453
+==F-score: 0.5
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 2}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.955026455026455
+==Precision Score: 0.6666666666666666
+==Recall Score: 0.5217391304347826
+==F-score: 0.5853658536585366
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9162995594713657
+==Precision Score: 0.5882352941176471
+==Recall Score: 0.45454545454545453
+==F-score: 0.5128205128205129
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1987
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.9483568075117371
+==Precision Score: 0.5384615384615384
+==Recall Score: 0.5833333333333334
+==F-score: 0.5599999999999999
+==Best parameters: {'criterion': 'entropy'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9107142857142857
+==Precision Score: 0.5833333333333334
+==Recall Score: 0.5833333333333334
+==F-score: 0.5833333333333334
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9671361502347418
+==Precision Score: 0.8125
+==Recall Score: 0.5416666666666666
+==F-score: 0.65
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 3}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9330357142857143
+==Precision Score: 0.8461538461538461
+==Recall Score: 0.4583333333333333
+==F-score: 0.5945945945945945
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 8, 'p': 3}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.971830985915493
+==Precision Score: 0.875
+==Recall Score: 0.5833333333333334
+==F-score: 0.7000000000000001
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9375
+==Precision Score: 0.8125
+==Recall Score: 0.5416666666666666
+==F-score: 0.65
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1988
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.9657534246575342
+==Precision Score: 0.6785714285714286
+==Recall Score: 0.76
+==F-score: 0.7169811320754718
+==Best parameters: {'criterion': 'entropy'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9246861924686193
+==Precision Score: 0.6296296296296297
+==Recall Score: 0.68
+==F-score: 0.6538461538461539
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9657534246575342
+==Precision Score: 0.7777777777777778
+==Recall Score: 0.56
+==F-score: 0.6511627906976745
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 4}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9456066945606695
+==Precision Score: 0.9285714285714286
+==Recall Score: 0.52
+==F-score: 0.6666666666666666
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 10, 'p': 1}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9726027397260274
+==Precision Score: 0.8421052631578947
+==Recall Score: 0.64
+==F-score: 0.7272727272727272
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9497907949790795
+==Precision Score: 0.782608695652174
+==Recall Score: 0.72
+==F-score: 0.7499999999999999
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1989
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.9694989106753813
+==Precision Score: 0.7037037037037037
+==Recall Score: 0.76
+==F-score: 0.7307692307692308
+==Best parameters: {'criterion': 'gini'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9416342412451362
+==Precision Score: 0.75
+==Recall Score: 0.6
+==F-score: 0.6666666666666665
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9694989106753813
+==Precision Score: 0.8666666666666667
+==Recall Score: 0.52
+==F-score: 0.65
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 10, 'p': 2}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9455252918287937
+==Precision Score: 0.8666666666666667
+==Recall Score: 0.52
+==F-score: 0.65
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 8, 'p': 3}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9760348583877996
+==Precision Score: 0.85
+==Recall Score: 0.68
+==F-score: 0.7555555555555556
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9649805447470817
+==Precision Score: 0.9
+==Recall Score: 0.72
+==F-score: 0.7999999999999999
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1990
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.9387755102040817
+==Precision Score: 0.5
+==Recall Score: 0.5555555555555556
+==F-score: 0.5263157894736842
+==Best parameters: {'criterion': 'entropy'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9348659003831418
+==Precision Score: 0.7
+==Recall Score: 0.56
+==F-score: 0.6222222222222222
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.963718820861678
+==Precision Score: 0.8235294117647058
+==Recall Score: 0.5185185185185185
+==F-score: 0.6363636363636364
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 4}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9540229885057471
+==Precision Score: 0.9333333333333333
+==Recall Score: 0.56
+==F-score: 0.7000000000000001
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 2}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9659863945578231
+==Precision Score: 0.75
+==Recall Score: 0.6666666666666666
+==F-score: 0.7058823529411765
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9425287356321839
+==Precision Score: 0.7272727272727273
+==Recall Score: 0.64
+==F-score: 0.6808510638297872
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1991
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.9541484716157205
+==Precision Score: 0.5925925925925926
+==Recall Score: 0.6153846153846154
+==F-score: 0.6037735849056604
+==Best parameters: {'criterion': 'gini'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9123505976095617
+==Precision Score: 0.5172413793103449
+==Recall Score: 0.6521739130434783
+==F-score: 0.576923076923077
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9585152838427947
+==Precision Score: 0.7692307692307693
+==Recall Score: 0.38461538461538464
+==F-score: 0.5128205128205128
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 10, 'p': 1}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9442231075697212
+==Precision Score: 0.8461538461538461
+==Recall Score: 0.4782608695652174
+==F-score: 0.6111111111111112
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 8, 'p': 3}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9694323144104804
+==Precision Score: 0.8
+==Recall Score: 0.6153846153846154
+==F-score: 0.6956521739130435
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9442231075697212
+==Precision Score: 0.7368421052631579
+==Recall Score: 0.6086956521739131
+==F-score: 0.6666666666666666
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1992
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.955456570155902
+==Precision Score: 0.6
+==Recall Score: 0.6923076923076923
+==F-score: 0.6428571428571429
+==Best parameters: {'criterion': 'gini'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9568627450980393
+==Precision Score: 0.75
+==Recall Score: 0.782608695652174
+==F-score: 0.7659574468085107
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9599109131403119
+==Precision Score: 0.7222222222222222
+==Recall Score: 0.5
+==F-score: 0.5909090909090908
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 3}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9372549019607843
+==Precision Score: 0.7058823529411765
+==Recall Score: 0.5217391304347826
+==F-score: 0.6
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 10, 'p': 1}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9688195991091314
+==Precision Score: 0.875
+==Recall Score: 0.5384615384615384
+==F-score: 0.6666666666666667
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9529411764705882
+==Precision Score: 0.8666666666666667
+==Recall Score: 0.5652173913043478
+==F-score: 0.6842105263157895
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1993
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.9313929313929314
+==Precision Score: 0.4444444444444444
+==Recall Score: 0.4
+==F-score: 0.4210526315789474
+==Best parameters: {'criterion': 'entropy'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9203187250996016
+==Precision Score: 0.65
+==Recall Score: 0.5
+==F-score: 0.5652173913043479
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9542619542619543
+==Precision Score: 0.8333333333333334
+==Recall Score: 0.3333333333333333
+==F-score: 0.47619047619047616
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 1}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9243027888446215
+==Precision Score: 0.8181818181818182
+==Recall Score: 0.34615384615384615
+==F-score: 0.4864864864864865
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 1}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9563409563409564
+==Precision Score: 0.8461538461538461
+==Recall Score: 0.36666666666666664
+==F-score: 0.5116279069767441
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9362549800796812
+==Precision Score: 0.8571428571428571
+==Recall Score: 0.46153846153846156
+==F-score: 0.6
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1994
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.9491150442477876
+==Precision Score: 0.5416666666666666
+==Recall Score: 0.52
+==F-score: 0.5306122448979592
+==Best parameters: {'criterion': 'entropy'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9166666666666666
+==Precision Score: 0.5833333333333334
+==Recall Score: 0.56
+==F-score: 0.5714285714285714
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9646017699115044
+==Precision Score: 0.9090909090909091
+==Recall Score: 0.4
+==F-score: 0.5555555555555556
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 10, 'p': 2}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9285714285714286
+==Precision Score: 0.8888888888888888
+==Recall Score: 0.32
+==F-score: 0.47058823529411764
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 8, 'p': 3}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9668141592920354
+==Precision Score: 0.8571428571428571
+==Recall Score: 0.48
+==F-score: 0.6153846153846153
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9444444444444444
+==Precision Score: 0.9230769230769231
+==Recall Score: 0.48
+==F-score: 0.631578947368421
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1995
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.9706422018348624
+==Precision Score: 0.7222222222222222
+==Recall Score: 0.5416666666666666
+==F-score: 0.619047619047619
+==Best parameters: {'criterion': 'entropy'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9139784946236559
+==Precision Score: 0.45454545454545453
+==Recall Score: 0.45454545454545453
+==F-score: 0.45454545454545453
+==Best parameters: {'criterion': 'gini'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9743119266055046
+==Precision Score: 0.9166666666666666
+==Recall Score: 0.4583333333333333
+==F-score: 0.611111111111111
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 8, 'p': 3}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.953405017921147
+==Precision Score: 0.9090909090909091
+==Recall Score: 0.45454545454545453
+==F-score: 0.6060606060606061
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 8, 'p': 3}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9798165137614679
+==Precision Score: 1.0
+==Recall Score: 0.5416666666666666
+==F-score: 0.7027027027027027
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.96415770609319
+==Precision Score: 1.0
+==Recall Score: 0.5454545454545454
+==F-score: 0.7058823529411764
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1996
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.9527145359019265
+==Precision Score: 0.5833333333333334
+==Recall Score: 0.45161290322580644
+==F-score: 0.509090909090909
+==Best parameters: {'criterion': 'gini'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9230769230769231
+==Precision Score: 0.65
+==Recall Score: 0.5
+==F-score: 0.5652173913043479
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9667250437828371
+==Precision Score: 0.9285714285714286
+==Recall Score: 0.41935483870967744
+==F-score: 0.5777777777777778
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 9, 'p': 3}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.9384615384615385
+==Precision Score: 0.9166666666666666
+==Recall Score: 0.4230769230769231
+==F-score: 0.5789473684210527
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 8, 'p': 3}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9649737302977233
+==Precision Score: 0.8666666666666667
+==Recall Score: 0.41935483870967744
+==F-score: 0.5652173913043478
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.9461538461538461
+==Precision Score: 0.9285714285714286
+==Recall Score: 0.5
+==F-score: 0.65
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1997
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.9616087751371115
+==Precision Score: 0.5882352941176471
+==Recall Score: 0.4166666666666667
+==F-score: 0.48780487804878053
+==Best parameters: {'criterion': 'gini'}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.937037037037037
+==Precision Score: 0.6875
+==Recall Score: 0.4782608695652174
+==F-score: 0.5641025641025642
+==Best parameters: {'criterion': 'entropy'}
+
+===KNN===:
+Regular Season Data:
+==Accuracy Score: 0.9670932358318098
+==Precision Score: 0.875
+==Recall Score: 0.2916666666666667
+==F-score: 0.43750000000000006
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 10, 'p': 2}
+Regular Season Data with at least 55 games played:
+==Accuracy Score: 0.937037037037037
+==Precision Score: 0.875
+==Recall Score: 0.30434782608695654
+==F-score: 0.4516129032258065
+==Best parameters: {'metric': 'minkowski', 'n_neighbors': 8, 'p': 3}
+
+===Support Vector Machine===:
+Regular Season Data (linear):
+==Accuracy Score: 0.9689213893967094
+==Precision Score: 0.8181818181818182
+==Recall Score: 0.375
+==F-score: 0.5142857142857142
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+Regular Season Data with at least 55 games played (linear):
+==Accuracy Score: 0.937037037037037
+==Precision Score: 0.8
+==Recall Score: 0.34782608695652173
+==F-score: 0.48484848484848486
+==Best parameters: {'C': 0.1, 'kernel': 'linear'}
+=====================================================
+current season as TEST set: 1998
+
+
+===ID3 Tree===:
+Regular Season Data:
+==Accuracy Score: 0.980276134122288
+/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/sklearn/metrics/_classification.py:1334: UndefinedMetricWarning: Recall and F-score are ill-defined and being set to 0.0 due to no true samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+==Precision Score: 0.0
+/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/sklearn/metrics/_classification.py:1334: UndefinedMetricWarning: Recall and F-score are ill-defined and being set to 0.0 due to no true samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+==Recall Score: 0.0
+/Library/Frameworks/Python.framework/Versions/3.10/lib/python3.10/site-packages/sklearn/metrics/_classification.py:1334: UndefinedMetricWarning: Recall and F-score are ill-defined and being set to 0.0 due to no true samples. Use `zero_division` parameter to control this behavior.
+  _warn_prf(average, modifier, msg_start, len(result))
+==F-score: 0.0
+==Best parameters: {'criterion': 'gini'}
+Regular Season Data with at least 55 games played:
